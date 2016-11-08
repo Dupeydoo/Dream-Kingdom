@@ -41,16 +41,16 @@ public class TextController : MonoBehaviour {
                     "was a vibrant ectasy of fauna mixed with lush green fields. The grass flowed " +
                     "and danced in the wind just as elegantly as the kingdom's finest entertainers. " +
                     "\"rrrggggghhh.\" It was time for the princess to get up and do her duties for the day. " +
-                    "What should the princess do? Press w to walk through the fields, v to visit the streets " +
-                    "or c to chat with her maids for a while...";
+                    "What should the princess do? Press W to walk through the fields, V to visit the streets " +
+                    "or C to chat with her maids for a while...";
 
         MorningChoices();
     }
 
     internal void GenMorningState()
     {
-        text.text = "What will the princess do today? Press w to walk through the fields, v to visit the streets " +
-                    "or c to chat with her maids for a while...";
+        text.text = "What will the princess do today? Press W to walk through the fields, V to visit the streets " +
+                    "or C to chat with her maids for a while...";
 
         MorningChoices();
     }
@@ -61,7 +61,7 @@ public class TextController : MonoBehaviour {
                     "had to take in a man off the streets! They said he wouldn't stop talking about the whispers " +
                     "of the kingdom's corruption.\" The princess pondered this for a moment... what could this mean? " +
                     "She considered it as she continued her day, but had soon forgotten these words. Blissfully unaware she " +
-                    "lay down for a nights rest. Press n to continue to the next day...";
+                    "lay down for a nights rest. Press N to continue to the next day...";
 
         TextInput(KeyCode.N, GameStates.GenMorning);
     }
@@ -72,7 +72,7 @@ public class TextController : MonoBehaviour {
                     "as if they were excited by her presence. She came to her usual field but was dumbfounded... " +
                     "a patch of red and purple dirt. The ground seemed to wriggle and convulse, possessed by some " +
                     "monstrosity from a nightmare. She ran home as fast as she could. It was night by her return, so " +
-                    "she tried to sleep... Press n for the next morning";
+                    "she tried to sleep... Press N for the next morning";
 
         TextInput(KeyCode.N, GameStates.GenMorning);
     }
