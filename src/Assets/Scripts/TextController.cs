@@ -2,22 +2,37 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/**
+**********************************************************************************************
+A simple textadventure game using Unity. In essence a very simple state machine, mapping from
+each state using keybindings.
+
+Author: James Du Plessis
+Version: 1.0.0
+See: Unity libraries
+*********************************************************************************************
+
+*/
 public class TextController : MonoBehaviour {
 
     public Text text;
-    private enum GameStates {Start, Morning, GenMorning, FieldWalk, StreetVisit, Maids};
+    private enum GameStates {Start, Morning, GenMorning, FieldWalk, StreetVisit, Maids}; //a type for game states
     private GameStates currentState;
 
-	// Use this for initialization
+	/*
+        Start method, called upon the beginning of the game
+    */
 	internal void Start () {
-        currentState = GameStates.Start;
+        currentState = GameStates.Start; //when we start the state is the starting state
 	}
 
-    // Update is called once per frame
+    /*
+        Each frame check the state and carry out a StateHandler depending
+    */
     internal void Update () {
         switch(currentState)
         {
-            case GameStates.Start: StartState(); break;
+            case GameStates.Start: StartState(); break;  //if start state -> call Start handler
             case GameStates.Morning: MorningState(); break;
             case GameStates.GenMorning: GenMorningState(); break;
             case GameStates.Maids: MaidState(); break;
@@ -27,12 +42,20 @@ public class TextController : MonoBehaviour {
         }
     }
 
+    #region StateHandler functions
+
+    /*
+        Handles the start state
+    */
     internal void StartState()
     {
         text.text = "Press space to begin...";
-        TextInput(KeyCode.Space, GameStates.Morning);
+        TextInput(KeyCode.Space, GameStates.Morning); //when space is pressed, new morning
     }
 
+    /*
+        Handles the initial morning state
+    */
     internal void MorningState()
     {
         text.text = "Chapter 1: Once upon a time there was a radiant princess who lived atop the highest " +
@@ -44,9 +67,12 @@ public class TextController : MonoBehaviour {
                     "What should the princess do?\n\nPress W to walk through the fields, V to visit the streets " +
                     "or C to chat with her maids for a while...";
 
-        MorningChoices();
+        MorningChoices(); //generic morning choice, see TextController.MorningChoices()
     }
 
+    /*
+        Handles the normal morning state
+    */
     internal void GenMorningState()
     {
         text.text = "What will the princess do today?\n\nPress W to walk through the fields, V to visit the streets " +
@@ -55,6 +81,9 @@ public class TextController : MonoBehaviour {
         MorningChoices();
     }
 
+    /*
+        Handles the talking to maids state
+    */
     internal void MaidState()
     {
         text.text = "\"Hey princess have you heard!\", exclaimed the head maid, \"Word is the guards " +
@@ -66,6 +95,9 @@ public class TextController : MonoBehaviour {
         TextInput(KeyCode.N, GameStates.GenMorning);
     }
 
+    /*
+        Handles the going for a walk in fields state
+    */
     internal void WalkState()
     {
         text.text = "The wind blew through the princesses' hair. Bliss. The animals leapt and moved around her, " +
@@ -77,6 +109,9 @@ public class TextController : MonoBehaviour {
         TextInput(KeyCode.N, GameStates.GenMorning);
     }
 
+    /*
+        Handles the street visit state
+    */
     internal void VisitState()
     {
         text.text = "The people cheered and greeted the princess as she glided gracefully through the " +
@@ -88,6 +123,13 @@ public class TextController : MonoBehaviour {
         TextInput(KeyCode.Alpha2, GameStates.Start);
     }
 
+    #endregion
+
+    #region Helper functions
+
+    /*
+        Generates the input choices you'd expect from a normal morning
+    */
     private void MorningChoices()
     {
         TextInput(KeyCode.W, GameStates.FieldWalk);
@@ -95,12 +137,18 @@ public class TextController : MonoBehaviour {
         TextInput(KeyCode.C, GameStates.Maids);
     }
 
+    /*
+        Handles usual keypress input
+
+        @param kc     A KeyCode from the KeyCode enum representing a keypress
+        @param state  A state representing a game state from the GameStates enum
+    */
     private void TextInput(KeyCode kc, GameStates state)
     {
-        if(Input.GetKeyDown(kc))
+        if(Input.GetKeyDown(kc)) //for a given key mapping, change to the right state
         {
             currentState = state;
         }
     }
-
+    #endregion
 }
