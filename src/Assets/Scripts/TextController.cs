@@ -9,32 +9,31 @@ public class TextController : MonoBehaviour {
     private GameStates currentState;
 
 	// Use this for initialization
-	void Start () {
+	internal void Start () {
         currentState = GameStates.Start;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    internal void Update () {
         switch(currentState)
         {
             case GameStates.Start: StartState(); break;
             case GameStates.Morning: MorningState(); break;
             case GameStates.GenMorning: GenMorningState(); break;
             case GameStates.Maids: MaidState(); break;
+            case GameStates.FieldWalk: WalkState(); break;
+            case GameStates.StreetVisit: VisitState(); break;
             default: break;
         }
     }
 
-    void StartState()
+    internal void StartState()
     {
         text.text = "Press space to begin...";
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            currentState = GameStates.Morning;
-        }
+        TextInput(KeyCode.Space, GameStates.Morning);
     }
 
-    void MorningState()
+    internal void MorningState()
     {
         text.text = "Once upon a time there was a radiant princess who lived atop the highest " +
                     "castle in the land! It was a quiet age and the people loved their princess " +
@@ -48,7 +47,7 @@ public class TextController : MonoBehaviour {
         MorningChoices();
     }
 
-    void GenMorningState()
+    internal void GenMorningState()
     {
         text.text = "What will the princess do today? Press w to walk through the fields, v to visit the streets " +
                     "or c to chat with her maids for a while...";
@@ -56,7 +55,7 @@ public class TextController : MonoBehaviour {
         MorningChoices();
     }
 
-    void MaidState()
+    internal void MaidState()
     {
         text.text = "\"Hey princess have you heard!\", exclaimed the head maid, \"Word is the guards " +
                     "had to take in a man off the streets! They said he wouldn't stop talking about the whispers " +
@@ -64,20 +63,43 @@ public class TextController : MonoBehaviour {
                     "She considered it as she continued her day, but had soon forgotten these words. Blissfully unaware she " +
                     "lay down for a nights rest. Press n to continue to the next day...";
 
-        if (Input.GetKeyDown(KeyCode.N))
-            currentState = GameStates.GenMorning;
+        TextInput(KeyCode.N, GameStates.GenMorning);
+    }
+
+    internal void WalkState()
+    {
+        text.text = "The wind blew through the princesses' hair. Bliss. The animals leapt and moved around her, " +
+                    "as if they were excited by her presence. She came to her usual field but was dumbfounded... " +
+                    "a patch of red and purple dirt. The ground seemed to wriggle and convulse, possessed by some " +
+                    "monstrosity from a nightmare. She ran home as fast as she could. It was night by her return, so " +
+                    "she tried to sleep... Press n for the next morning";
+
+        TextInput(KeyCode.N, GameStates.GenMorning);
+    }
+
+    internal void VisitState()
+    {
+        text.text = "The people cheered and greeted the princess as she glided gracefully through the " +
+                    "the streets. She was generous and empathetic to the poor. A high class lady to the rich, but " +
+                    "this is just who she was. Respected and loved by her subjects. Little did she know an abomination " +
+                    "had just began to stir... (Wait for the story to continue, press P to play again";
+
+        TextInput(KeyCode.P, GameStates.Start);
     }
 
     private void MorningChoices()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-            currentState = GameStates.FieldWalk;
+        TextInput(KeyCode.W, GameStates.FieldWalk);
+        TextInput(KeyCode.V, GameStates.StreetVisit);
+        TextInput(KeyCode.C, GameStates.Maids);
+    }
 
-        else if (Input.GetKeyDown(KeyCode.V))
-            currentState = GameStates.StreetVisit;
-
-        else if (Input.GetKeyDown(KeyCode.C))
-            currentState = GameStates.Maids;
+    private void TextInput(KeyCode kc, GameStates state)
+    {
+        if(Input.GetKeyDown(kc))
+        {
+            currentState = state;
+        }
     }
 
 }
